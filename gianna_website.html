@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gianna - #1 Asshole</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Left Section */
+        .left-section {
+            flex: 1;
+            background: linear-gradient(135deg, #FFB366 0%, #FFCC85 100%);
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 120px;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2C2C2C;
+            letter-spacing: -1px;
+        }
+
+        /* Grid-style menu icon */
+        .menu-icon {
+            display: grid;
+            grid-template-columns: repeat(3, 8px);
+            grid-template-rows: repeat(3, 8px);
+            gap: 3px;
+            cursor: pointer;
+        }
+
+        .menu-square {
+            background: #2C2C2C;
+            border-radius: 1px;
+        }
+
+        .menu-square:nth-child(2),
+        .menu-square:nth-child(4),
+        .menu-square:nth-child(6) {
+            opacity: 0.7;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .main-title {
+            font-size: 5.5rem;
+            font-weight: 900;
+            color: #2C2C2C;
+            line-height: 0.9;
+            margin-bottom: 100px;
+        }
+
+        .highlight {
+            color: #FF4500;
+            font-weight: 900;
+            font-size: 6rem;
+        }
+
+        .description {
+            font-size: 17px;
+            color: #2C2C2C;
+            line-height: 1.8;
+            max-width: 420px;
+            font-weight: 400;
+        }
+
+        /* Right Section */
+        .right-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .letter-row {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            position: relative;
+            height: 80px;
+        }
+
+        /* Row backgrounds */
+        .row-m { background: #87CEEB; }
+        .row-u { background: #87CEEB; }
+        .row-b { background: #DEB887; }
+        .row-a { background: #F5F5DC; }
+        .row-s { background: #FF7F50; }
+        .row-i { background: #FF7F50; }
+        .row-c { background: #DDA0DD; }
+
+        /* Letter styling - directly in the row */
+        .letter {
+            font-size: 2.2rem;
+            font-weight: bold;
+            padding: 20px 30px;
+            margin-left: 40px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        /* Individual letter colors */
+        .letter-m {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+        }
+
+        .letter-b {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+        }
+
+        .letter-a {
+            background: rgba(139, 69, 19, 0.25);
+            color: #8B4513;
+        }
+
+        .letter-i {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+        }
+
+        .letter-c {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+        }
+
+        /* Black overlay boxes for U and S */
+        .black-overlay {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 65%;
+            height: 100%;
+            background: #1A1A1A;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 50px;
+            border-radius: 12px 0 0 12px;
+        }
+
+        .overlay-letter {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        /* Music playing indicator */
+        .playing {
+            animation: musicPulse 0.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes musicPulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); box-shadow: 0 0 20px rgba(255, 69, 0, 0.6); }
+        }
+
+        /* Hover effects */
+        .letter:hover {
+            transform: translateX(15px) scale(1.1);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .black-overlay:hover {
+            transform: translateX(-15px);
+            background: #333;
+        }
+
+        .black-overlay:hover .overlay-letter {
+            transform: scale(1.1);
+        }
+
+        .menu-icon:hover .menu-square {
+            background: #FF4500;
+            transform: scale(1.2);
+        }
+
+        /* Music controls */
+        .music-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 20px;
+            border-radius: 25px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .control-btn {
+            background: #FF4500;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .control-btn:hover {
+            background: #FF6500;
+            transform: scale(1.05);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .container {
+                flex-direction: column;
+                overflow-y: auto;
+                overflow-x: hidden;
+            }
+
+            .left-section {
+                min-height: 100vh;
+                padding: 40px;
+            }
+
+            .right-section {
+                min-height: 50vh;
+            }
+
+            .main-title {
+                font-size: 4.5rem;
+                margin-bottom: 80px;
+            }
+
+            .highlight {
+                font-size: 5rem;
+            }
+
+            .letter-row {
+                height: 70px;
+            }
+
+            .letter, .overlay-letter {
+                font-size: 1.8rem;
+            }
+
+            .black-overlay {
+                padding-right: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .left-section {
+                padding: 30px;
+            }
+
+            .main-title {
+                font-size: 3.5rem;
+                margin-bottom: 60px;
+            }
+
+            .highlight {
+                font-size: 4rem;
+            }
+
+            .letter-row {
+                height: 60px;
+            }
+
+            .letter {
+                margin-left: 20px;
+                padding: 15px 20px;
+                font-size: 1.4rem;
+            }
+
+            .overlay-letter {
+                font-size: 1.4rem;
+            }
+
+            .black-overlay {
+                padding-right: 30px;
+            }
+
+            .description {
+                font-size: 15px;
+            }
+
+            .menu-icon {
+                grid-template-columns: repeat(3, 6px);
+                grid-template-rows: repeat(3, 6px);
+                gap: 2px;
+            }
+        }
+
+        /* Animation for rows */
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .letter-row {
+            animation: slideInRight 0.8s ease-out;
+        }
+
+        .letter-row:nth-child(1) { animation-delay: 0.1s; }
+        .letter-row:nth-child(2) { animation-delay: 0.2s; }
+        .letter-row:nth-child(3) { animation-delay: 0.3s; }
+        .letter-row:nth-child(4) { animation-delay: 0.4s; }
+        .letter-row:nth-child(5) { animation-delay: 0.5s; }
+        .letter-row:nth-child(6) { animation-delay: 0.6s; }
+        .letter-row:nth-child(7) { animation-delay: 0.7s; }
+    </style>
+</head>
+<body>
+    <!-- Audio elements for each letter -->
+    <audio id="audio-a" preload="auto">
+        <source src="music/a.mp3" type="audio/mpeg">
+        <source src="music/a.wav" type="audio/wav">
+        <!-- Add your music file path here -->
+    </audio>
+    <audio id="audio-s1" preload="auto">
+        <source src="music/s1.mp3" type="audio/mpeg">
+        <source src="music/s1.wav" type="audio/wav">
+    </audio>
+    <audio id="audio-s2" preload="auto">
+        <source src="music/s2.mp3" type="audio/mpeg">
+        <source src="music/s2.wav" type="audio/wav">
+    </audio>
+    <audio id="audio-h" preload="auto">
+        <source src="music/h.mp3" type="audio/mpeg">
+        <source src="music/h.wav" type="audio/wav">
+    </audio>
+    <audio id="audio-o" preload="auto">
+        <source src="music/o.mp3" type="audio/mpeg">
+        <source src="music/o.wav" type="audio/wav">
+    </audio>
+    <audio id="audio-l" preload="auto">
+        <source src="music/l.mp3" type="audio/mpeg">
+        <source src="music/l.wav" type="audio/wav">
+    </audio>
+    <audio id="audio-e" preload="auto">
+        <source src="music/e.mp3" type="audio/mpeg">
+        <source src="music/e.wav" type="audio/wav">
+    </audio>
+
+    <div class="container">
+        <!-- Left Section -->
+        <div class="left-section">
+            <div class="header">
+                <div class="logo">Gianna</div>
+                <div class="menu-icon">
+                    <div class="menu-square"></div>
+                    <div class="menu-square"></div>
+                    <div class="menu-square"></div>
+                    <div class="menu-square"></div>
+                    <div class="menu-square"></div>
+                    <div class="menu-square"></div>
+                    <div class="menu-square"></div>
+                    <div class="menu-square"></div>
+                    <div class="menu-square"></div>
+                </div>
+            </div>
+            
+            <div class="main-content">
+                <h1 class="main-title">
+                    The <span class="highlight">#1</span><br>
+                    gayboy<br>
+                    of<br>
+                    alltime.
+                </h1>
+                
+                <p class="description">
+                    Wondering how that asshole is rightnow
+                </p>
+            </div>
+
+            <!-- Music Controls -->
+            <div class="music-controls">
+                <button class="control-btn" onclick="stopAllAudio()">Stop All</button>
+                <button class="control-btn" onclick="playSequence()">Play Sequence</button>
+                <button class="control-btn" onclick="toggleMute()">Mute/Unmute</button>
+            </div>
+        </div>
+
+        <!-- Right Section -->
+        <div class="right-section">
+            <!-- A Row -->
+            <div class="letter-row row-m">
+                <div class="letter letter-m" data-letter="a" data-audio="audio-a">A</div>
+            </div>
+            
+            <!-- S Row (first S) -->
+            <div class="letter-row row-u">
+                <div class="black-overlay" data-letter="s1" data-audio="audio-s1">
+                    <div class="overlay-letter">S</div>
+                </div>
+            </div>
+            
+            <!-- S Row (second S) -->
+            <div class="letter-row row-b">
+                <div class="letter letter-b" data-letter="s2" data-audio="audio-s2">S</div>
+            </div>
+            
+            <!-- H Row -->
+            <div class="letter-row row-a">
+                <div class="letter letter-a" data-letter="h" data-audio="audio-h">H</div>
+            </div>
+            
+            <!-- O Row -->
+            <div class="letter-row row-s">
+                <div class="black-overlay" data-letter="o" data-audio="audio-o">
+                    <div class="overlay-letter">O</div>
+                </div>
+            </div>
+            
+            <!-- L Row -->
+            <div class="letter-row row-i">
+                <div class="letter letter-i" data-letter="l" data-audio="audio-l">L</div>
+            </div>
+            
+            <!-- E Row -->
+            <div class="letter-row row-c">
+                <div class="letter letter-c" data-letter="e" data-audio="audio-e">E</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isMuted = false;
+        let currentlyPlaying = [];
+
+        // Function to play audio for a specific letter
+        function playAudio(audioId, element) {
+            if (isMuted) return;
+
+            const audio = document.getElementById(audioId);
+            if (audio) {
+                // Stop the audio if it's currently playing
+                audio.pause();
+                audio.currentTime = 0;
+                
+                // Play the audio
+                audio.play().catch(e => {
+                    console.log('Audio play failed:', e);
+                });
+
+                // Add visual feedback
+                element.classList.add('playing');
+                currentlyPlaying.push(element);
+
+                // Remove visual feedback when audio ends
+                audio.addEventListener('ended', () => {
+                    element.classList.remove('playing');
+                    const index = currentlyPlaying.indexOf(element);
+                    if (index > -1) {
+                        currentlyPlaying.splice(index, 1);
+                    }
+                });
+            }
+        }
+
+        // Function to stop all playing audio
+        function stopAllAudio() {
+            const audioElements = document.querySelectorAll('audio');
+            audioElements.forEach(audio => {
+                audio.pause();
+                audio.currentTime = 0;
+            });
+
+            // Remove all visual feedback
+            currentlyPlaying.forEach(element => {
+                element.classList.remove('playing');
+            });
+            currentlyPlaying = [];
+        }
+
+        // Function to play the sequence A-S-S-H-O-L-E
+        function playSequence() {
+            if (isMuted) return;
+
+            const sequence = ['audio-a', 'audio-s1', 'audio-s2', 'audio-h', 'audio-o', 'audio-l', 'audio-e'];
+            const elements = document.querySelectorAll('[data-audio]');
+            
+            stopAllAudio();
+
+            sequence.forEach((audioId, index) => {
+                setTimeout(() => {
+                    const element = document.querySelector(`[data-audio="${audioId}"]`);
+                    if (element) {
+                        playAudio(audioId, element);
+                    }
+                }, index * 500); // 500ms delay between each letter
+            });
+        }
+
+        // Function to toggle mute
+        function toggleMute() {
+            isMuted = !isMuted;
+            const button = event.target;
+            button.textContent = isMuted ? 'Unmuted' : 'Mute/Unmute';
+            button.style.background = isMuted ? '#666' : '#FF4500';
+
+            if (isMuted) {
+                stopAllAudio();
+            }
+        }
+
+        // Add click listeners to letters
+        const letters = document.querySelectorAll('.letter');
+        const blackOverlays = document.querySelectorAll('.black-overlay');
+        
+        // Handle regular letters
+        letters.forEach(letter => {
+            letter.addEventListener('mouseenter', function() {
+                if (!this.classList.contains('playing')) {
+                    this.style.transform = 'translateX(20px) scale(1.15)';
+                }
+            });
+            
+            letter.addEventListener('mouseleave', function() {
+                if (!this.classList.contains('playing')) {
+                    this.style.transform = 'translateX(0) scale(1)';
+                }
+            });
+
+            letter.addEventListener('click', function() {
+                // Play audio
+                const audioId = this.getAttribute('data-audio');
+                if (audioId) {
+                    playAudio(audioId, this);
+                }
+
+                // Add click animation
+                this.style.transform = 'translateX(10px) scale(0.95)';
+                setTimeout(() => {
+                    if (!this.classList.contains('playing')) {
+                        this.style.transform = 'translateX(0) scale(1)';
+                    }
+                }, 200);
+            });
+        });
+
+        // Handle black overlay letters
+        blackOverlays.forEach(overlay => {
+            overlay.addEventListener('mouseenter', function() {
+                if (!this.classList.contains('playing')) {
+                    this.style.transform = 'translateX(-20px)';
+                    this.style.background = '#333';
+                    this.querySelector('.overlay-letter').style.transform = 'scale(1.15)';
+                }
+            });
+            
+            overlay.addEventListener('mouseleave', function() {
+                if (!this.classList.contains('playing')) {
+                    this.style.transform = 'translateX(0)';
+                    this.style.background = '#1A1A1A';
+                    this.querySelector('.overlay-letter').style.transform = 'scale(1)';
+                }
+            });
+
+            overlay.addEventListener('click', function() {
+                // Play audio
+                const audioId = this.getAttribute('data-audio');
+                if (audioId) {
+                    playAudio(audioId, this);
+                }
+
+                // Add click animation
+                this.style.transform = 'translateX(-10px) scale(0.98)';
+                setTimeout(() => {
+                    if (!this.classList.contains('playing')) {
+                        this.style.transform = 'translateX(0) scale(1)';
+                    }
+                }, 200);
+            });
+        });
+
+        // Add menu interaction with stagger effect
+        const menuIcon = document.querySelector('.menu-icon');
+        menuIcon.addEventListener('click', function() {
+            const squares = this.querySelectorAll('.menu-square');
+            squares.forEach((square, index) => {
+                setTimeout(() => {
+                    square.style.background = '#FF4500';
+                    square.style.transform = 'scale(1.3) rotate(45deg)';
+                    setTimeout(() => {
+                        square.style.background = '#2C2C2C';
+                        square.style.transform = 'scale(1) rotate(0deg)';
+                    }, 200);
+                }, index * 50);
+            });
+        });
+
+        // Add subtle parallax effect
+        document.addEventListener('mousemove', function(e) {
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
+            
+            const letters = document.querySelectorAll('.letter, .overlay-letter');
+            letters.forEach((letter, index) => {
+                const speed = (index % 3 + 1) * 2;
+                const x = mouseX * speed;
+                const y = mouseY * speed;
+                
+                letter.style.textShadow = `${x}px ${y}px 10px rgba(0,0,0,0.3)`;
+            });
+        });
+
+        // Auto-enable audio on user interaction (required by browsers)
+        document.addEventListener('click', function enableAudio() {
+            const audioElements = document.querySelectorAll('audio');
+            audioElements.forEach(audio => {
+                audio.load();
+            });
+            document.removeEventListener('click', enableAudio);
+        }, { once: true });
+    </script>
+</body>
+</html>
